@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>B&G Ventas - Sistema Oficial</title>
     
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/25XNzhkv/LOGO-B-G.png">
+    <link rel="icon" href="https://i.postimg.cc/25XNzhkv/LOGO-B-G.png">
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="B&G Ventas">
@@ -13,80 +16,37 @@
     
     <style>
         :root { --azul: #2980b9; --verde: #27ae60; --rojo: #c0392b; --gris: #34495e; }
-        
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            padding: 20px 10px; 
-            background-color: #f4f7f6; 
-            margin: 0; 
-            display: flex;
-            justify-content: center; /* Centra la app en pantallas de PC */
-            touch-action: manipulation;
-        }
-
-        .card { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-            width: 100%;
-            max-width: 450px; /* Evita que se estire feo en PC */
-            box-sizing: border-box;
-        }
-
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px 10px; background-color: #f4f7f6; margin: 0; display: flex; justify-content: center; touch-action: manipulation; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 450px; box-sizing: border-box; }
         h2 { text-align: center; color: #2c3e50; margin-top:0; }
-
-        /* Barra de Herramientas superior */
         .config-bar { display: flex; gap: 8px; margin-bottom: 15px; }
         .btn-tool { flex: 1; padding: 10px; border: none; border-radius: 8px; color: white; cursor: pointer; font-size: 11px; font-weight: bold; }
-
-        /* Selector Particular/Negocio */
         .mode-selector { display: flex; gap: 10px; margin-bottom: 20px; }
         .btn-mode { flex: 1; padding: 14px; border: 2px solid var(--azul); border-radius: 10px; background: white; color: var(--azul); font-weight: bold; cursor: pointer; }
         .btn-mode.active { background: var(--azul); color: white; }
-
-        /* Categorías */
         .grid-cat { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .btn-cat { padding: 15px; border: 1px solid #ddd; border-radius: 10px; background: #fff; cursor: pointer; font-size: 14px; font-weight: bold; }
-
-        /* Inputs y Selects optimizados para móviles */
-        select, input { 
-            width: 100%; 
-            padding: 14px; 
-            margin: 8px 0; 
-            border: 1px solid #ccc; 
-            border-radius: 10px; 
-            box-sizing: border-box; 
-            font-size: 16px !important; /* Evita zoom automático en iPhone */
-        }
-
+        select, input { width: 100%; padding: 14px; margin: 8px 0; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; font-size: 16px !important; }
         .main-btn { width: 100%; padding: 16px; background-color: var(--verde); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        
         .total-box { font-size: 28px; font-weight: bold; text-align: center; padding: 20px; background: #e8f4fd; border-radius: 12px; margin: 15px 0; color: var(--azul); }
-
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { padding: 10px 5px; border-bottom: 1px solid #eee; text-align: left; font-size: 14px; }
-        
         .hidden { display: none; }
         .report-section { margin-top: 20px; background: #fafafa; padding: 15px; border-radius: 10px; border: 1px solid #eee; }
     </style>
 </head>
 <body>
-
 <div class="card">
-    <h2>🍕 B&G Ventas</h2>
-
+    <h2>B&G Ventas</h2>
     <div class="config-bar">
         <input type="file" id="input-logo" accept="image/*" style="display:none" onchange="procesarLogo(event)">
         <button onclick="document.getElementById('input-logo').click()" class="btn-tool" style="background: var(--gris);">⚙️ LOGO</button>
         <button onclick="reiniciarContador()" class="btn-tool" style="background: var(--rojo);">🔄 RESET #</button>
     </div>
-
     <div class="mode-selector">
         <button id="btn-particular" class="btn-mode" onclick="setModo('particular')">Particular</button>
         <button id="btn-negocio" class="btn-mode" onclick="setModo('negocio')">Negocio</button>
     </div>
-
     <div id="formulario-venta" class="hidden">
         <div class="grid-cat">
             <button class="btn-cat" onclick="filtrarProductos('Pizzas')">🍕 Pizzas</button>
@@ -94,36 +54,25 @@
             <button class="btn-cat" onclick="filtrarProductos('Calzones')">🥪 Calzones</button>
             <button class="btn-cat" onclick="filtrarProductos('Panchos')">🌭 Panchos</button>
         </div>
-
         <select id="producto"><option value="">Elegí categoría...</option></select>
         <input type="number" id="cantidad" value="1" min="1">
         <button class="main-btn" style="background-color: var(--azul);" onclick="agregarAlCarrito()">+ Agregar</button>
-
-        <table>
-            <tbody id="tabla-cuerpo"></tbody>
-        </table>
-
+        <table><tbody id="tabla-cuerpo"></tbody></table>
         <div class="total-box">TOTAL: $<span id="total-final">0</span></div>
-
         <input type="text" id="cliente-nombre" placeholder="Nombre del Cliente">
         <button class="main-btn" onclick="finalizarVenta()">Finalizar y Generar PDF</button>
-
         <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-        
         <button id="btn-ver-historial" class="main-btn" style="background:#7f8c8d; font-size: 14px; padding: 12px;">📊 RESUMEN DE HOY</button>
         <button id="btn-exportar-excel" class="main-btn" style="background: #1d6f42; font-size: 14px; padding: 12px;">📥 EXCEL DETALLADO</button>
-        
         <div id="seccion-reporte" class="report-section hidden">
             <h3 id="suma-total-dia" style="color:var(--verde); margin:0 0 10px 0;">Total Hoy: $0</h3>
             <div id="historial-lista" style="font-size:13px;"></div>
         </div>
     </div>
 </div>
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
     const firebaseConfig = {
         apiKey: "AIzaSyCKR7of34WkQFm8fohBNyxgRP_v7Oz20sQ",
         authDomain: "bg-comidas.firebaseapp.com",
@@ -132,30 +81,22 @@
         messagingSenderId: "899013849985",
         appId: "1:899013849985:web:eaf2198af4efd973ed6e80"
     };
-
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-
     window.guardarEnNube = async (datos) => {
         try { await addDoc(collection(db, "ventas"), { ...datos, timestamp: serverTimestamp() }); } catch (e) { console.error(e); }
     };
-
     document.getElementById('btn-exportar-excel').onclick = async () => {
         const snapshot = await getDocs(collection(db, "ventas"));
         let csv = "data:text/csv;charset=utf-8,sep=,\nRecibo,Fecha,Cliente,Producto,Cant,Subtotal\n";
         snapshot.forEach(doc => {
             const v = doc.data();
             const cli = v.cliente.replace(/,/g, "");
-            if (v.items) {
-                v.items.forEach(i => { csv += `${v.nroRecibo},${v.fecha},${cli},${i.nombre},${i.cant},${i.subtotal}\n`; });
+            if (v.items) { v.items.forEach(i => { csv += `${v.nroRecibo},${v.fecha},${cli},${i.nombre},${i.cant},${i.subtotal}\n`; });
             } else { csv += `${v.nroRecibo},${v.fecha},${cli},Sin detalle,0,${v.total}\n`; }
         });
-        const link = document.createElement("a");
-        link.setAttribute("href", encodeURI(csv));
-        link.setAttribute("download", "Reporte_BG_Ventas.csv");
-        link.click();
+        const link = document.createElement("a"); link.setAttribute("href", encodeURI(csv)); link.setAttribute("download", "Reporte_BG_Ventas.csv"); link.click();
     };
-
     document.getElementById('btn-ver-historial').onclick = async () => {
         const panel = document.getElementById('seccion-reporte');
         const lista = document.getElementById('historial-lista');
@@ -180,14 +121,12 @@
         } catch (e) { lista.innerHTML = "Error."; }
     };
 </script>
-
 <script>
     let modoActual = '', carrito = [];
     const aliasMP = "BGCONGELADOS";
     const titular = "Gustavo De Angelis";
     let nroRecibo = localStorage.getItem('ultimoRecibo') ? parseInt(localStorage.getItem('ultimoRecibo')) + 1 : 1;
     let logoData = localStorage.getItem('logoPizzeria') || "";
-
     const precios = {
         particular: {
             Pizzas: [{nombre: "Muzza Grande", precio: 10000}, {nombre: "Muzza Mediana", precio: 7000}, {nombre: "Especial Grande", precio: 12000}, {nombre: "Especial Mediana", precio: 9000}, {nombre: "Calabresa Grande", precio: 12000}, {nombre: "Calabresa Mediana", precio: 9000}, {nombre: "Cantimpalo Grande", precio: 12000}, {nombre: "Cantimpalo Mediana", precio: 9000}, {nombre: "Fugazza Grande", precio: 10000}, {nombre: "Fugazza Mediana", precio: 7000}, {nombre: "Napolitana Grande", precio: 12000}, {nombre: "Napolitana Mediana", precio: 9000}, {nombre: "Roquefort Grande", precio: 12000}, {nombre: "Roquefort Mediana", precio: 9000}],
@@ -202,102 +141,34 @@
             Panchos: [{nombre: "Pancho J&Q", precio: 2500}, {nombre: "Pancho Roquefort", precio: 2500}, {nombre: "Pancho Napo", precio: 2500}]
         }
     };
-
-    function reiniciarContador() {
-        if(confirm("¿Reiniciar recibos a #1?")) { localStorage.setItem('ultimoRecibo', 0); location.reload(); }
-    }
-
-    function procesarLogo(e) {
-        const reader = new FileReader();
-        reader.onload = (r) => { logoData = r.target.result; localStorage.setItem('logoPizzeria', logoData); alert("Logo Guardado"); };
-        reader.readAsDataURL(e.target.files[0]);
-    }
-
-    function setModo(m) {
-        modoActual = m;
-        document.getElementById('btn-particular').classList.toggle('active', m === 'particular');
-        document.getElementById('btn-negocio').classList.toggle('active', m === 'negocio');
-        document.getElementById('formulario-venta').classList.remove('hidden');
-    }
-
-    function filtrarProductos(cat) {
-        const s = document.getElementById('producto');
-        s.innerHTML = "";
-        precios[modoActual][cat].forEach(p => {
-            let o = document.createElement('option');
-            o.value = p.nombre; o.text = `${p.nombre} ($${p.precio})`;
-            o.setAttribute('data-precio', p.precio);
-            s.appendChild(o);
-        });
-    }
-
-    function agregarAlCarrito() {
-        const s = document.getElementById('producto');
-        const p = parseFloat(s.options[s.selectedIndex]?.getAttribute('data-precio'));
-        const c = parseInt(document.getElementById('cantidad').value);
-        if(!s.value) return;
-        carrito.push({ nombre: s.value, precio: p, cant: c, subtotal: p * c });
-        renderizarTabla();
-    }
-
-    function renderizarTabla() {
-        const t = document.getElementById('tabla-cuerpo');
-        let total = 0; t.innerHTML = "";
-        carrito.forEach((it, i) => {
-            total += it.subtotal;
-            t.innerHTML += `<tr><td>${it.cant}x</td><td>${it.nombre}</td><td>$${it.subtotal}</td><td onclick="eliminar(${i})" style="color:red; font-weight:bold; cursor:pointer;">&nbsp;X</td></tr>`;
-        });
-        document.getElementById('total-final').innerText = total;
-    }
-
+    function reiniciarContador() { if(confirm("¿Reiniciar recibos a #1?")) { localStorage.setItem('ultimoRecibo', 0); location.reload(); } }
+    function procesarLogo(e) { const reader = new FileReader(); reader.onload = (r) => { logoData = r.target.result; localStorage.setItem('logoPizzeria', logoData); alert("Logo Guardado"); }; reader.readAsDataURL(e.target.files[0]); }
+    function setModo(m) { modoActual = m; document.getElementById('btn-particular').classList.toggle('active', m === 'particular'); document.getElementById('btn-negocio').classList.toggle('active', m === 'negocio'); document.getElementById('formulario-venta').classList.remove('hidden'); }
+    function filtrarProductos(cat) { const s = document.getElementById('producto'); s.innerHTML = ""; precios[modoActual][cat].forEach(p => { let o = document.createElement('option'); o.value = p.nombre; o.text = `${p.nombre} ($${p.precio})`; o.setAttribute('data-precio', p.precio); s.appendChild(o); }); }
+    function agregarAlCarrito() { const s = document.getElementById('producto'); const p = parseFloat(s.options[s.selectedIndex]?.getAttribute('data-precio')); const c = parseInt(document.getElementById('cantidad').value); if(!s.value) return; carrito.push({ nombre: s.value, precio: p, cant: c, subtotal: p * c }); renderizarTabla(); }
+    function renderizarTabla() { const t = document.getElementById('tabla-cuerpo'); let total = 0; t.innerHTML = ""; carrito.forEach((it, i) => { total += it.subtotal; t.innerHTML += `<tr><td>${it.cant}x</td><td>${it.nombre}</td><td>$${it.subtotal}</td><td onclick="eliminar(${i})" style="color:red; font-weight:bold; cursor:pointer;">&nbsp;X</td></tr>`; }); document.getElementById('total-final').innerText = total; }
     function eliminar(i) { carrito.splice(i, 1); renderizarTabla(); }
-
     async function finalizarVenta() {
         if(carrito.length === 0) return alert("Carrito vacío");
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+        const { jsPDF } = window.jspdf; const doc = new jsPDF();
         const nom = (document.getElementById('cliente-nombre').value || "Cliente").toUpperCase();
-        const totalV = document.getElementById('total-final').innerText;
-        const hoy = new Date().toLocaleDateString();
-
+        const totalV = document.getElementById('total-final').innerText; const hoy = new Date().toLocaleDateString();
         if (logoData) doc.addImage(logoData, 'PNG', 15, 10, 25, 25);
         doc.setFont("helvetica", "bold").setFontSize(18).text("B&G COMIDAS CONGELADAS", 45, 22);
         doc.setFontSize(10).text(`Recibo: #${nroRecibo}`, 150, 22);
         doc.setFont("helvetica", "normal").text(`Fecha: ${hoy}`, 45, 28);
         doc.setFont("helvetica", "bold").text(`CLIENTE: ${nom}`, 45, 34);
         doc.line(15, 40, 195, 40);
-
-        let y = 50;
-        doc.text("CANT.", 15, y); doc.text("PRODUCTO", 40, y);
-        doc.text("P. UNIT", 140, y, {align:"right"}); doc.text("TOTAL", 185, y, {align:"right"});
+        let y = 50; doc.text("CANT.", 15, y); doc.text("PRODUCTO", 40, y); doc.text("P. UNIT", 140, y, {align:"right"}); doc.text("TOTAL", 185, y, {align:"right"});
         y += 8; doc.setFont("helvetica", "normal");
-        carrito.forEach(it => {
-            doc.text(`${it.cant}x`, 15, y); doc.text(it.nombre, 40, y);
-            doc.text(`$${it.precio}`, 140, y, {align:"right"});
-            doc.text(`$${it.subtotal}`, 185, y, {align:"right"});
-            y += 8;
-        });
-
-        doc.line(120, y, 195, y); y += 12;
-        doc.setFontSize(14).setFont("helvetica", "bold").text(`TOTAL A PAGAR: $${totalV}`, 185, y, {align:"right"});
-        
-        y += 15; doc.setFontSize(10).text("PAGOS:", 15, y);
-        doc.setFont("helvetica", "normal").text(`Alias: ${aliasMP}`, 15, y + 7);
-        doc.text(`Titular: ${titular}`, 15, y + 14);
-
+        carrito.forEach(it => { doc.text(`${it.cant}x`, 15, y); doc.text(it.nombre, 40, y); doc.text(`$${it.precio}`, 140, y, {align:"right"}); doc.text(`$${it.subtotal}`, 185, y, {align:"right"}); y += 8; });
+        doc.line(120, y, 195, y); y += 12; doc.setFontSize(14).setFont("helvetica", "bold").text(`TOTAL A PAGAR: $${totalV}`, 185, y, {align:"right"});
+        y += 15; doc.setFontSize(10).text("PAGOS:", 15, y); doc.setFont("helvetica", "normal").text(`Alias: ${aliasMP}`, 15, y + 7); doc.text(`Titular: ${titular}`, 15, y + 14);
         y += 28; doc.setFont("helvetica", "bold").setFontSize(12).text("¡Gracias por elegir B&G!", 105, y, {align: "center"});
-        
-        try {
-            doc.addImage("https://cdn-icons-png.flaticon.com/512/174/174855.png", 'PNG', 50, y+6, 5, 5);
-            doc.setFontSize(9).setFont("helvetica", "normal").text("bgcomidascongeladas", 57, y+10);
-            doc.addImage("https://cdn-icons-png.flaticon.com/512/733/733585.png", 'PNG', 110, y+6, 5, 5);
-            doc.text("2634622421", 117, y+10);
-        } catch(e) {}
-
+        try { doc.addImage("https://cdn-icons-png.flaticon.com/512/174/174855.png", 'PNG', 50, y+6, 5, 5); doc.setFontSize(9).setFont("helvetica", "normal").text("bgcomidascongeladas", 57, y+10); doc.addImage("https://cdn-icons-png.flaticon.com/512/733/733585.png", 'PNG', 110, y+6, 5, 5); doc.text("2634622421", 117, y+10); } catch(e) {}
         doc.save(`Recibo_BG_${nroRecibo}_${nom}.pdf`);
         if(window.guardarEnNube) await window.guardarEnNube({ nroRecibo, cliente: nom, total: totalV, fecha: hoy, items: carrito });
-        localStorage.setItem('ultimoRecibo', nroRecibo);
-        alert("¡Venta Exitosa!"); location.reload();
+        localStorage.setItem('ultimoRecibo', nroRecibo); alert("¡Venta Exitosa!"); location.reload();
     }
 </script>
 </body>
