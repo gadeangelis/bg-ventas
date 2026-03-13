@@ -155,7 +155,7 @@
         const totalV = document.getElementById('total-final').innerText; const hoy = new Date().toLocaleDateString();
         if (logoData) doc.addImage(logoData, 'PNG', 15, 10, 25, 25);
         doc.setFont("helvetica", "bold").setFontSize(18).text("B&G COMIDAS CONGELADAS", 45, 22);
-        //doc.setFontSize(10).text(`Recibo: #${nroRecibo}`, 150, 22);
+        doc.setFontSize(10).text(`Recibo: `, 150, 22);
         doc.setFont("helvetica", "normal").text(`Fecha: ${hoy}`, 45, 28);
         doc.setFont("helvetica", "bold").text(`CLIENTE: ${nom}`, 45, 34);
         doc.line(15, 40, 195, 40);
